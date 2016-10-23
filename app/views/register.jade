@@ -1,8 +1,7 @@
 h1!= csrfToken
 
-form(action="/register", method="POST")
-  
-  input(type="hidden", name="_csrf", value=csrfToken)
+form(action="/auth/register", method="POST")
+
   label User name
   input(type="text", name="username")
   br

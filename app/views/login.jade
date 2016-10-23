@@ -1,7 +1,6 @@
-form(action="/login", method="POST")
-  input(type="hidden", name="_csrf", value=csrfToken)
+form(action="/auth/login", method="POST")
   label Email
-  input(type="text", name="email")
+  input(type="text", name="username")
   br
   label Password
   input(type="password", name="password")

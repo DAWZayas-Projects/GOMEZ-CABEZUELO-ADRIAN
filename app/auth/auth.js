@@ -1,7 +1,6 @@
 
-var passport = require('koa-passport')
+import passport from 'koa-passport'
 
-var user = { id: 1, username: 'test' }
 
 passport.serializeUser(function(user, done) {
   done(null, user.id)
@@ -11,9 +10,10 @@ passport.deserializeUser(function(id, done) {
   done(null, user)
 })
 
-var LocalStrategy = require('passport-local').Strategy
+const LocalStrategy = require('passport-local').Strategy
 passport.use(new LocalStrategy(function(username, password, done) {
   // retrieve user ...
+  const user = { id: 1, username: 'test' }
   if (username === 'test' && password === 'test') {
     done(null, user)
   } else {
@@ -21,7 +21,7 @@ passport.use(new LocalStrategy(function(username, password, done) {
   }
 }))
 
-var FacebookStrategy = require('passport-facebook').Strategy
+const FacebookStrategy = require('passport-facebook').Strategy
 passport.use(new FacebookStrategy({
     clientID: 'your-consumer-key',
     clientSecret: 'your-secret',
@@ -33,7 +33,7 @@ passport.use(new FacebookStrategy({
   }
 ))
 
-var TwitterStrategy = require('passport-twitter').Strategy
+const TwitterStrategy = require('passport-twitter').Strategy
 passport.use(new TwitterStrategy({
     consumerKey: 'your-consumer-key',
     consumerSecret: 'your-secret',
@@ -45,7 +45,7 @@ passport.use(new TwitterStrategy({
   }
 ))
 
-var GoogleStrategy = require('passport-google-auth').Strategy
+const GoogleStrategy = require('passport-google-auth').Strategy
 passport.use(new GoogleStrategy({
     clientId: 'your-client-id',
     clientSecret: 'your-secret',
@@ -56,3 +56,5 @@ passport.use(new GoogleStrategy({
     done(null, user)
   }
 ))
+
+export default passport
