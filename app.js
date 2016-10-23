@@ -14,10 +14,6 @@ import Config from './config/mysql';
 
 const app = new Koa();
 
-import * as userModel from './models/user.js';
-
-userModel.createUser();
-
 
 app.key = ['is-a-secret'];
 

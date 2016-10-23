@@ -9,13 +9,16 @@ export const User = sequelize.define('User', {
 
 
 export const createUser = async function createUser() {
-	let sync = await User.sync({force: true});
-	let user = await User.create({
+	const user = await User.create({
 		username: 'Pepe',
 		password: 'password',
 		email: 'pepe@gmail.com'
 	});
-	console.log(user.toJSON());
+	console.log(user);
 }
 
 
+export const findUserById = async function findUserById(id) {
+	const user = await User.findById(id);
+	console.log(user);
+}

@@ -1,6 +1,6 @@
 export default {
-					user: '***',
-					password: '***',
-					database: '***',
-					host: '***'
+					user: 'root',
+					password: 'Soluciones2016',
+					database: 'proyect_daw',
+					host: 'localhost'
 				}
