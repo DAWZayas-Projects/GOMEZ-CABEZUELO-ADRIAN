@@ -1,0 +1,9 @@
+form(action="/login", method="POST")
+  input(type="hidden", name="_csrf", value=csrfToken)
+  label Email
+  input(type="text", name="email")
+  br
+  label Password
+  input(type="password", name="password")
+  br
+  input(type="submit", value="LogIn")

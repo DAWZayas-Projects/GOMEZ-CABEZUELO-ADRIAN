@@ -4,7 +4,8 @@
   "description": "simple koa proyect",
   "main": "app.js",
   "scripts": {
-    "start": "babel-node app.js",
+    "start": "babel-node ./bin/index.js",
+    "debug": "",
     "test": "mocha"
   },
   "keywords": [
@@ -17,10 +18,13 @@
     "koa-bodyparser": "^3.2.0",
     "koa-compress": "^2.0.0",
     "koa-convert": "^1.2.0",
+    "koa-csrf": "^3.0.4",
     "koa-jade-render": "^1.0.0",
+    "koa-passport": "^2.2.2",
     "koa-router": "^7.0.1",
     "koa-static": "^2.0.0",
     "mysql": "^2.11.1",
+    "passport-local": "^1.0.0",
     "sequelize": "^3.24.5"
   },
   "devDependencies": {
