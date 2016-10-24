@@ -1,4 +1,4 @@
-
+import * as User     from '../models/user'
 import passport from 'koa-passport'
 
 
@@ -11,10 +11,10 @@ passport.deserializeUser(function(id, done) {
 })
 
 const LocalStrategy = require('passport-local').Strategy
-passport.use(new LocalStrategy(function(username, password, done) {
-  // retrieve user ...
-  const user = { id: 1, username: 'test' }
-  if (username === 'test' && password === 'test') {
+passport.use(new LocalStrategy( async function(username, password, done) {
+
+  const user = await User.findUserByEmail(username)
+  if (user && username === user.email && password === user.password) {
     done(null, user)
   } else {
     done(null, false)

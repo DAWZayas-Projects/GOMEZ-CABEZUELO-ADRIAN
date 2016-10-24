@@ -5,4 +5,7 @@ form(action="/auth/login", method="POST")
   label Password
   input(type="password", name="password")
   br
+  if message
+     p #{message}
+  br
   input(type="submit", value="LogIn")
