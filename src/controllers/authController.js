@@ -8,7 +8,7 @@ export const loginWithLocalStrategy = async (ctx, next) => {
       ctx.render('login', { message: 'bad credencials'} )
     } else {
       await ctx.login(user)
-      ctx.render('profile', { user: user })
+      ctx.redirect(`/profile/${user.id}`)
     }
   })
 
