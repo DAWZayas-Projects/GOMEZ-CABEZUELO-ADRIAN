@@ -6,6 +6,9 @@ import { Provider } from 'react-redux';
 import configureStore from './store/configureStore'
 import App from './containers/App'
 
+import $ from 'jquery';
+require('bootstrap-loader');
+
 
 const store = configureStore();
 

@@ -1,60 +1,48 @@
-import AccountModel from '../models/account';
-import passport from 'koa-passport'
+'use strict';
 
+import passport from 'koa-passport';
+import AccountModel from '../models/account';
+import GooglePassport from 'passport-google-oauth';
+import log4js from 'log4js';
+
+const LOG = log4js.getLogger('file');
 
 passport.serializeUser(function(user, done) {
-  done(null, user.id)
+    done(null, user.id)
 })
 
 passport.deserializeUser(function(id, done) {
-  done(null, user)
+    AccountModel.findOne(id, function(err, user) {
+        done(err, user)
+    })
 })
 
-const LocalStrategy = require('passport-local').Strategy
-passport.use(new LocalStrategy( async function(username, password, done) {
+var LocalStrategy = require('passport-local').Strategy
 
-  const user = await User.findUserByEmail(username)
-  if (user && username === user.email && password === user.password) {
-    done(null, user)
-  } else {
-    done(null, false)
-  }
+passport.use(new LocalStrategy(function(username, password, done) {
+
+  AccountModel.verify(username, password)
+    .then(function(result) {
+        if(result != null) {
+            done(null, result)
+        }  else {
+            done(null, false)
+        }
+    })
 }))
 
-const FacebookStrategy = require('passport-facebook').Strategy
-passport.use(new FacebookStrategy({
-    clientID: 'your-consumer-key',
-    clientSecret: 'your-secret',
-    callbackURL: 'http://localhost:' + (process.env.PORT || 3000) + '/config/facebook/callback'
-  },
-  function(token, tokenSecret, profile, done) {
-    // retrieve user ...
-    done(null, user)
-  }
-))
+const GoogleStrategy = GooglePassport.OAuth2Strategy;
 
-const TwitterStrategy = require('passport-twitter').Strategy
-passport.use(new TwitterStrategy({
-    consumerKey: 'your-consumer-key',
-    consumerSecret: 'your-secret',
-    callbackURL: 'http://localhost:' + (process.env.PORT || 3000) + '/config/twitter/callback'
-  },
-  function(token, tokenSecret, profile, done) {
-    // retrieve user ...
-    done(null, user)
-  }
-))
-
-const GoogleStrategy = require('passport-google-auth').Strategy
 passport.use(new GoogleStrategy({
-    clientId: 'your-client-id',
-    clientSecret: 'your-secret',
-    callbackURL: 'http://localhost:' + (process.env.PORT || 3000) + '/config/google/callback'
+    clientID: '933369426196-jgtcultj5hghn0hsucm58n3gevmpip1v.apps.googleusercontent.com',
+    clientSecret: '4FK3X7XJkr0R3MDd5uUUBJef',
+    callbackURL: 'http://localhost:' + (process.env.PORT || 5000) + '/auth/google/callback'
   },
   function(token, tokenSecret, profile, done) {
     // retrieve user ...
-    done(null, user)
+    LOG.warn(JSON.stringify({
+        'profile' : profile
+    }))
+    done(null, profile)
   }
 ))
-
-export default passport

@@ -26,7 +26,10 @@ module.exports = {
     filename: '[name].js'
   },
   plugins: [
-
+    new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery"
+        }),
      new webpack.optimize.CommonsChunkPlugin('vendor', './vendor.bundle.js'),
      new webpack.DefinePlugin({
         "process.env": {
@@ -36,6 +39,11 @@ module.exports = {
   ],
   module: {
     loaders: [
+      { test: /vendor\/.+\.(jsx|js)$/,
+        loader: 'imports?jQuery=jquery,$=jquery,this=>window'
+      },
+
+
       {
         test: /(\.jsx|\.js)$/,
         loaders: ['babel?presets[]=es2015&presets[]=react'],
@@ -46,10 +54,8 @@ module.exports = {
         test: /\.(css|less)$/,
         loader: 'null'
       },
-      { test: /\.woff2?$/, loader: 'null' },
-      { test: /\.ttf$/, loader: 'null' },
-      { test: /\.eot$/, loader: 'null' },
-      { test: /\.svg$/, loader: 'null' },
+      { test: /\.(woff2?|svg)$/, loader: 'url?limit=10000' },
+      { test: /\.(ttf|eot)$/, loader: 'file' },
       { test: /\.(png|jpg|jpeg|gif|webp)$/i, loader: 'url?limit=200' },
       { test: /\.json$/, loader: 'json' }
     ],
