@@ -1,7 +1,7 @@
 'use strict';
 
 import passport from 'koa-passport';
-import AccountModel from '../models/account';
+import UserModel from '../models/user';
 import GooglePassport from 'passport-google-oauth';
 import log4js from 'log4js';
 
@@ -12,16 +12,15 @@ passport.serializeUser(function(user, done) {
 })
 
 passport.deserializeUser(function(id, done) {
-    AccountModel.findOne(id, function(err, user) {
-        done(err, user)
-    })
+    UserModel.findById(id)
+      .then(user  => user !== null ? done(null, user) : done(500, user))
 })
 
 var LocalStrategy = require('passport-local').Strategy
 
 passport.use(new LocalStrategy(function(username, password, done) {
 
-  AccountModel.verify(username, password)
+  UserModel.verify(username, password)
     .then(function(result) {
         if(result != null) {
             done(null, result)
@@ -39,10 +38,7 @@ passport.use(new GoogleStrategy({
     callbackURL: 'http://localhost:' + (process.env.PORT || 5000) + '/auth/google/callback'
   },
   function(token, tokenSecret, profile, done) {
-    // retrieve user ...
-    LOG.warn(JSON.stringify({
-        'profile' : profile
-    }))
+    
     done(null, profile)
   }
 ))

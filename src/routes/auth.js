@@ -1,9 +1,10 @@
 'use strict';
 
-import Router from 'koa-router';
-import passport from 'koa-passport';
+import Router from 'koa-router'
+import passport from 'koa-passport'
+import UserModel from '../models/user'
 
-const router = new Router();
+const router = new Router()
 
 router.get('/login', async (ctx, next) => {
     ctx.body = {
@@ -15,16 +16,14 @@ router.get('/google', passport.authenticate('google', { scope: ['https://www.goo
 
 
 router.get('/google/callback', async (ctx, next) => {
-  let middleware = passport.authenticate('google', async(user, info) => {
-      if (user === false) {
+  let middleware = passport.authenticate('google', async(profile, info) => {
+      if (profile === false) {
           ctx.body = {
-              'status' : 400
+              "status" : 400
           }
       } else {
+          const user = await UserModel.findByGoogleStrategy(await profile)
           await ctx.login(user)
-          ctx.body = {
-              user: user
-          }
           ctx.redirect('/')
       }
   })
@@ -35,12 +34,12 @@ router.post('/login', async (ctx, next) => {
     let middleware = passport.authenticate('local', async(user, info) => {
         if (user === false) {
             ctx.body = {
-                'status' : 400
+                "status" : 400
             }
         } else {
             await ctx.login(user)
             ctx.body = {
-                user: user
+                "user": user
             }
         }
     })

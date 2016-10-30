@@ -1,13 +1,14 @@
-'use strict';
+'use strict'
 
-import Koa from 'koa';
-import baseconfig from './config/base';
-import middleware from './middleware';
-import routes from './routes';
-import config from './config/config';
-import log4js from 'log4js';
+import Koa from 'koa'
+import baseconfig from './config/base'
+import middleware from './middleware'
+import routes from './routes'
+import config from './config/config'
+import log4js from 'log4js'
+import User from './models/user'
 
-const app = new Koa();
+const app = new Koa()
 const LOG = log4js.getLogger('file')
 
 
@@ -20,7 +21,18 @@ app.use(middleware())
 //configure custom routes
 app.use(routes())
 
-app.listen(config.app.port);
-LOG.info("Server started, listening on port: " + config.app.port);
+
+/*
+User.sync({force: true}).then(function () {
+  // Table created
+  return User.create({
+    name: 'test',
+    password: 'test'
+  });
+});
+*/
+
+app.listen(config.app.port)
+LOG.info("Server started, listening on port: " + config.app.port)
 
 export default app
