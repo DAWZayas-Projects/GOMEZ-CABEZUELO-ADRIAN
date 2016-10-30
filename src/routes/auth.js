@@ -25,6 +25,7 @@ router.get('/google/callback', async (ctx, next) => {
           ctx.body = {
               user: user
           }
+          ctx.redirect('/')
       }
   })
   await middleware.call(this, ctx, next)

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { authUser, authGoogle } from '../actions/authed';
+import { authUser } from '../actions/authed';
 import { Button } from 'react-bootstrap';
 
 class LoginContainer extends React.Component {
@@ -34,7 +34,7 @@ class LoginContainer extends React.Component {
                                 <button type="submit" className="btn btn-success btn-block btn-lg">Sign me in</button>
                             </div>
                             <a href="/auth/google">Sign In with Google</a>
-                          
+
                         </form>
                     </div>
             </div>
