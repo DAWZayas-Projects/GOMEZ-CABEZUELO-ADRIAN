@@ -30,7 +30,7 @@ export function authUser(authinfo) {
                 async : true,
                 success: function(data, status, xhr) {
                     if(data.status == 400) {
-                        alert('Login errro, username/password is test/test')
+                        alert('Login errro, username/password bad credentials')
                         dispatch({
                             type : types.AUTH_FAILED
                         })
@@ -47,4 +47,28 @@ export function authUser(authinfo) {
                 crossDomain: true
         });
     }
+}
+
+export function registerUser(data) {
+  return dispatch => {
+    $.ajax('/auth/register', {
+      type: "POST",
+      contentType: "application/json; charset=utf-8",
+      data : JSON.stringify(data),
+      async: true,
+      success: function(data, status, xhr) {
+        if(data.status == 400) {
+            alert('Login errro, no valid ...')
+            dispatch({
+                type : types.AUTH_FAILED
+            })
+        } else {
+            dispatch({
+                type : types.AUTH_SUCCESS
+            })
+            history.push('/main')
+        }
+      }
+    })
+  }
 }

@@ -8,7 +8,7 @@ import App from './containers/App'
 
 import $ from 'jquery';
 require('bootstrap-loader');
-
+require('./public/css/index.css');
 
 const store = configureStore();
 

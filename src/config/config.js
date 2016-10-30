@@ -21,9 +21,9 @@ let specific = {
         db: {
             host: 'localhost',
             port : 3306,
-            user : 'test',
-            password : 'test',
-            database : 'test',
+            user : 'root',
+            password : 'Soluciones2016',
+            database : 'proyect_daw',
             dialect: 'mysql',
         }
     },
@@ -38,7 +38,7 @@ let specific = {
             port : 3306,
             user : 'test',
             password : 'test',
-            database : 'test',
+            database : 'proyect_daw',
             dialect: 'mysql',
         }
     },

@@ -5,11 +5,8 @@ import { connect } from 'react-redux';
 import { checkAuth } from '../actions/authed';
 
 class DashboardContainer extends React.Component {
+  
   componentDidMount() {
-      document.body.classList.remove('bg-white')
-      document.getElementById('page-container').classList.add('page-sidebar-fixed')
-      document.getElementById('page-container').classList.add('page-header-fixed')
-
       if(this.props.route.path != '/404') {
           this.props.dispatch(checkAuth())
       }

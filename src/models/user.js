@@ -52,11 +52,18 @@ User.findOneByUserName = async (name) => {
   })
 }
 
+User.createNewUser = async (user) => {
+  return await User.sync().then(function () {
+                  // Table created
+                  return User.create({
+                    name: user.username,
+                    password: user.password,
+                    email: user.email
+                  });
+                });
+}
+
 User.findByGoogleStrategy = async (user) => {
-  // retrieve user ...
-  LOG.warn(JSON.stringify({
-      'user------------' : user
-  }))
   return await User
                 .findOrCreate({where: {id_google: user.id}, defaults: {name: user.displayName, photo: user.photos[0].value} })
                 .spread(function(user, created) {

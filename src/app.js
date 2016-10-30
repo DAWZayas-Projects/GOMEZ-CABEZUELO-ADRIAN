@@ -22,16 +22,6 @@ app.use(middleware())
 app.use(routes())
 
 
-/*
-User.sync({force: true}).then(function () {
-  // Table created
-  return User.create({
-    name: 'test',
-    password: 'test'
-  });
-});
-*/
-
 app.listen(config.app.port)
 LOG.info("Server started, listening on port: " + config.app.port)
 

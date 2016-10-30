@@ -45,7 +45,7 @@ module.exports = {
       },
       {
         test: /\.(css|less)$/,
-        loader: 'null'
+        loader: "style-loader!css-loader"
       },
       { test: /\.woff2?$/, loader: 'null' },
       { test: /\.ttf$/, loader: 'null' },

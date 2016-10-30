@@ -3,6 +3,9 @@
 import Router from 'koa-router'
 import passport from 'koa-passport'
 import UserModel from '../models/user'
+import log4js from 'log4js';
+
+const LOG = log4js.getLogger('file');
 
 const router = new Router()
 
@@ -44,6 +47,23 @@ router.post('/login', async (ctx, next) => {
         }
     })
     await middleware.call(this, ctx, next)
+})
+
+router.post('/register', async(ctx, next) => {
+    const userPassed = ctx.request.body
+    const user = await UserModel.findOneByUserName(userPassed.username)
+    if (!user) {
+      const newUser = await UserModel.createNewUser(userPassed);
+      await ctx.login(newUser)
+      ctx.body = {
+          "user": newUser
+      }
+    } else {
+      ctx.body = {
+          "status" : 400
+      }
+    }
+    console.log(user);
 })
 
 
