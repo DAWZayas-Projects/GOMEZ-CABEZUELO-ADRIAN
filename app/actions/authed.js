@@ -13,9 +13,18 @@ export function checkAuth() {
                 return tresponse.json()
             })
             .then( tjson => {
-
                 if(tjson.isLogin == false) {
-                    history.push('/signin')
+                  dispatch({
+                      type : types.AUTH_FAILED,
+                      payload: {},
+                  })
+                  history.push('/signin')
+                }else {
+                  debugger
+                  dispatch({
+                      type : types.AUTH_SUCCESS,
+                      payload: tjson.user,
+                  })
                 }
             })
     }
@@ -32,11 +41,13 @@ export function authUser(authinfo) {
                     if(data.status == 400) {
                         alert('Login errro, username/password bad credentials')
                         dispatch({
-                            type : types.AUTH_FAILED
+                            type : types.AUTH_FAILED,
+                            payload: {},
                         })
                     } else {
                         dispatch({
-                            type : types.AUTH_SUCCESS
+                            type : types.AUTH_SUCCESS,
+                            payload: data.user,
                         })
                         history.push('/main')
                     }
@@ -60,11 +71,13 @@ export function registerUser(data) {
         if(data.status == 400) {
             alert('Login errro, no valid ...')
             dispatch({
-                type : types.AUTH_FAILED
+                type : types.AUTH_FAILED,
+                payload: {},
             })
         } else {
             dispatch({
-                type : types.AUTH_SUCCESS
+                type : types.AUTH_SUCCESS,
+                payload: data,
             })
             history.push('/main')
         }

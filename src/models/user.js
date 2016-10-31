@@ -77,10 +77,6 @@ User.verify = async function(username, password) {
 
     let user = await User.findOneByUserName(username)
 
-    LOG.warn(JSON.stringify({
-        'user' : user,
-    }))
-
     if(user !== null && (user.dataValues.password === password) && (user.name === username)) {
         return user
     } else {

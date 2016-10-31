@@ -73,9 +73,11 @@ router.get('/logout', async (ctx, newt) => {
 })
 
 router.get('/status', async (ctx, next) => {
-    ctx.body = {
-        "isLogin" : ctx.isAuthenticated()
-    }
+  const user = ctx.isAuthenticated() ? ctx.req.user : {}
+  ctx.body = {
+      "isLogin" : ctx.isAuthenticated(),
+      "user"    : user,
+  }
 })
 
 export default router;

@@ -5,31 +5,40 @@ import { connect } from 'react-redux';
 import { checkAuth } from '../actions/authed';
 
 class DashboardContainer extends React.Component {
-  
-  componentDidMount() {
-      if(this.props.route.path != '/404') {
-          this.props.dispatch(checkAuth())
-      }
 
+  constructor(props) {
+    super(props)
   }
-    render() {
 
-        return (
-            <div>
-                <div className="content">
-                    <h1 className="page-header">Dashboard <small>header small text goes here...</small></h1>
-                </div>
-            </div>
-        )
+  componentWillMount() {
+    if(this.props.route.path != '/404') {
+        this.props.oncheckAuth()
     }
+  }
+
+  render() {
+      const name = this.props.user.name || ''
+      return (
+          <div>
+              <div className="content">
+                  <h1 className="page-header">Dashboard {name}</h1>
+              </div>
+          </div>
+      )
+  }
+
 }
 
 
 function mapStateToProps(state) {
-
     return {
-        main : state.main
+        user : state.user
     }
 }
+function mapActionsToProps(dispatch) {
+  return {
+  	oncheckAuth: () => dispatch(checkAuth()),
+  };
+}
 
-export default connect(mapStateToProps)(DashboardContainer)
+export default connect(mapStateToProps, mapActionsToProps)(DashboardContainer)
