@@ -11,6 +11,8 @@ const user = (state = {}, action) => {
             return concatUserInTheState(state, action.payload)
         case types.AUTH_FAILED:
             return concatUserInTheState(state, action.payload)
+        case types.LOG_OUT:
+            return concatUserInTheState(state, action.payload)
         default:
             return state;
     }

@@ -20,7 +20,6 @@ export function checkAuth() {
                   })
                   history.push('/signin')
                 }else {
-                  debugger
                   dispatch({
                       type : types.AUTH_SUCCESS,
                       payload: tjson.user,
@@ -28,6 +27,21 @@ export function checkAuth() {
                 }
             })
     }
+}
+
+export function logOut() {
+  return dispatch => {
+    fetch('/auth/logout', {
+      credentials: 'same-origin'
+    })
+    .then( _ => {
+      dispatch({
+        type : types.LOG_OUT,
+        payload: {},
+      })
+      history.push('/signin')
+    })
+  }
 }
 
 export function authUser(authinfo) {

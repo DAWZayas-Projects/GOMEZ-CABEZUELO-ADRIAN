@@ -6,7 +6,7 @@ Application for uploading files via ftp and have a record
 * Redux
 * React
 * Mysql
-* Passporw Authentication
+* Passport Authentication
 * Sequelize as ORM
 
 

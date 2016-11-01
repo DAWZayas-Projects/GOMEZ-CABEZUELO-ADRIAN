@@ -45,6 +45,7 @@
     "react-native-vector-icons": "^3.0.0",
     "request": "^2.73.0",
     "sequelize": "^3.24.6",
+    "sequelize-cli": "^2.4.0",
     "swig": "^1.4.2"
   },
   "devDependencies": {
