@@ -13,15 +13,23 @@ export function ftpConnexion(ftpInfo) {
             data : JSON.stringify(ftpInfo),
             async : true,
             success: function(data, status, xhr) {
+              debugger
                 if(data.status == 400) {
                     dispatch({
                         type : types.CONNEXION_FAIL,
-                        message: 'Error connecting to host'
+                        payload: {
+                          message: 'Error connecting to host',
+                          hostList: data.list
+                        }
                     })
                 } else {
                     dispatch({
                         type : types.CONNEXION_SUCCESS,
-                        message: 'Connection success'
+                        payload: {
+                          message: 'Error connecting to host',
+                          hostList: data.list
+                        }
+
                     })
                 }
             },

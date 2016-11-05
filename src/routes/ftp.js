@@ -5,11 +5,8 @@ import  * as FtpControllers from '../controllers/ftp'
 
 const router = new Router()
 
-router.post('/connect', (ctx, next) => {
-  console.log('eeee')
-  ctx.body = {
-      "status": 200
-  }
+router.post('/connect', async (ctx, next) => {
+  await FtpControllers.connectToFtp(ctx, next)
 })
 
 
