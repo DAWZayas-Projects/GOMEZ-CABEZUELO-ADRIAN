@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { checkAuth, logOut } from '../actions/authed'
+import { ftpConnexion } from '../actions/ftp'
 import Sidebar from '../components/Sidebar'
 
 class ConnectionFtpContainer extends React.Component {
@@ -11,6 +12,11 @@ class ConnectionFtpContainer extends React.Component {
 
   componentWillMount() {
     if(this.props.route.path != '/404') this.props.oncheckAuth()
+  }
+
+  onSubmit(event) {
+      event.preventDefault()
+      this.props.onFtpConnexion({host:this.refs.host.value, user:this.refs.user.value, password :this.refs.password.value})
   }
 
   render() {
@@ -30,18 +36,18 @@ class ConnectionFtpContainer extends React.Component {
               <h1 className="page-header">New Connexion</h1>
 
               <div className="row">
-                <form>
+                <form onSubmit={(e) => this.onSubmit(e)}>
                   <div className="form-group">
                     <label htmlFor="host">Host</label>
-                    <input type="text" required className="form-control" id="host" placeholder="Host" />
+                    <input type="text" required className="form-control" id="host" ref="host" placeholder="Host" />
                   </div>
                   <div className="form-group">
                     <label htmlFor="user">User</label>
-                    <input type="text" required className="form-control" id="user" placeholder="User" />
+                    <input type="text" required className="form-control" id="user" ref="user" placeholder="User" />
                   </div>
                   <div className="form-group">
                     <label htmlFor="password">Password</label>
-                    <input type="password" required className="form-control" id="password" placeholder="Password" />
+                    <input type="password" required className="form-control" id="password" ref="password" placeholder="Password" />
                   </div>
                   <button type="submit" className="btn btn-default">Submit</button>
                 </form>
@@ -66,6 +72,7 @@ function mapActionsToProps(dispatch) {
   return {
     oncheckAuth: () => dispatch(checkAuth()),
     onLogOut: () => dispatch(logOut()),
+    onFtpConnexion: (ftpInfo) => dispatch(ftpConnexion(ftpInfo)),
   }
 }
 

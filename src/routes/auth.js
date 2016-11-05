@@ -63,7 +63,6 @@ router.post('/register', async(ctx, next) => {
           "status" : 400
       }
     }
-    console.log(user);
 })
 
 

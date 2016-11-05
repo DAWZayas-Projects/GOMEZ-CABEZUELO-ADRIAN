@@ -5,7 +5,12 @@ import  * as FtpControllers from '../controllers/ftp'
 
 const router = new Router()
 
-router.post('/connect', (ctx, next) => FtpControllers.connectToFtp(ctx, next))
+router.post('/connect', (ctx, next) => {
+  console.log('eeee')
+  ctx.body = {
+      "status": 200
+  }
+})
 
 
 export default router
