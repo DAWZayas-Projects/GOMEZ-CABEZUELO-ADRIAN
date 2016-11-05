@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { checkAuth, logOut } from '../actions/authed'
-import { ftpConnexion } from '../actions/ftp'
+import { ftpListDir } from '../actions/ftp'
 import Sidebar from '../components/Sidebar'
 
 class ConnectionFtpContainer extends React.Component {
@@ -14,9 +14,14 @@ class ConnectionFtpContainer extends React.Component {
     if(this.props.route.path != '/404') this.props.oncheckAuth()
   }
 
-  onSubmit(event) {
+  onSubmit(event, root = '/') {
       event.preventDefault()
-      this.props.onFtpConnexion({host:this.refs.host.value, user:this.refs.user.value, password :this.refs.password.value})
+      this.props.onFtpListDir({
+        host:this.refs.hostList.value,
+        user:this.refs.user.value,
+        password :this.refs.password.value,
+        root,
+      })
   }
 
   render() {
@@ -86,7 +91,7 @@ function mapActionsToProps(dispatch) {
   return {
     oncheckAuth: () => dispatch(checkAuth()),
     onLogOut: () => dispatch(logOut()),
-    onFtpConnexion: (ftpInfo) => dispatch(ftpConnexion(ftpInfo)),
+    onFtpListDir: (ftpInfo) => dispatch(ftpListDir(ftpInfo)),
   }
 }
 
