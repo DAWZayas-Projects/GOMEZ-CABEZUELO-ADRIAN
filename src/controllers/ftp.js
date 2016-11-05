@@ -20,9 +20,7 @@ export const connectToFtp = async (ctx, next) => {
              console.log('Directory listing: ', list);
              ctx.body = {
                status: 200,
-               data: {
-                 list,
-               }
+               list,
              }
              return ftp.end();
            })
@@ -30,9 +28,7 @@ export const connectToFtp = async (ctx, next) => {
              console.log('Error: ', ex )
              ctx.body = {
                status: 400,
-               data: {
-                 list: [],
-               }
+              list: [],
              }
           })
 }

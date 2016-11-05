@@ -13,7 +13,6 @@ export function ftpConnexion(ftpInfo) {
             data : JSON.stringify(ftpInfo),
             async : true,
             success: function(data, status, xhr) {
-              debugger
                 if(data.status == 400) {
                     dispatch({
                         type : types.CONNEXION_FAIL,
@@ -26,7 +25,7 @@ export function ftpConnexion(ftpInfo) {
                     dispatch({
                         type : types.CONNEXION_SUCCESS,
                         payload: {
-                          message: 'Error connecting to host',
+                          message: 'Connection established',
                           hostList: data.list
                         }
 
