@@ -20,9 +20,9 @@ class ConnectionFtpContainer extends React.Component {
   }
 
   render() {
-    const name  = this.props.user.name  || ''
-    const photo = this.props.user.photo || ''
-
+    const name      = this.props.user.name  || ''
+    const photo     = this.props.user.photo || ''
+    const hostList  = this.props.ftp.hostList || []
     return (
       <div className="container-fluid container-fluid-dasboard">
 
@@ -54,6 +54,19 @@ class ConnectionFtpContainer extends React.Component {
               </div>
           </div>
 
+          <div className="col-sm-8">
+              <h1 className="page-header">List Host</h1>
+
+              <div className="row">
+                <ul>
+                {
+                  hostList.map( (list, index) => <li key={index}>{list.name}</li> )
+                }
+                </ul>
+              </div>
+
+          </div>
+
         </div>
 
       </div>
@@ -65,6 +78,7 @@ class ConnectionFtpContainer extends React.Component {
 function mapStateToProps(state) {
   return {
     user: state.user,
+    ftp: state.ftp,
   }
 }
 
