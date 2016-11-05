@@ -3,8 +3,8 @@
 import compose from 'koa-compose';
 import Router from 'koa-router';
 
-
 import RouterAuth from './auth';
+import RouterFtp from './ftp';
 
 
 const router = new Router();
@@ -16,6 +16,7 @@ router.get('/', async (ctx, next) => {
 
 
 router.use('/auth', RouterAuth.routes(), RouterAuth.allowedMethods())
+router.use('/ftp', RouterFtp.routes(), RouterFtp.allowedMethods())
 
 router.get('*', async (ctx, next) => {
     ctx.body = { status : 404 }

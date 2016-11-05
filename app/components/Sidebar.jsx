@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import history from '../store/history'
 
 class Sidebar extends React.Component {
 
@@ -6,6 +7,11 @@ class Sidebar extends React.Component {
   onClickLogOut(event) {
     event.preventDefault()
     this.props.onLogOut()
+  }
+
+  onClickNewConnexion(event) {
+    event.preventDefault()
+    history.push('/connect')
   }
 
   render() {
@@ -47,7 +53,7 @@ class Sidebar extends React.Component {
                   <a href="#"><i className="fa fa-reply fa-lg"></i> New <span className="arrow"></span></a>
                 </li>
                 <ul className="sub-menu collapse" id="new">
-                  <li>New New 1</li>
+                  <li onClick={ (event) => this.onClickNewConnexion(event) } >New connexion</li>
                   <li>New New 2</li>
                   <li>New New 3</li>
                 </ul>

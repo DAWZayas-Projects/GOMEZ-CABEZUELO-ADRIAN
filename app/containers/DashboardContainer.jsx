@@ -1,6 +1,4 @@
-
 import React from 'react'
-
 import { connect } from 'react-redux'
 import { checkAuth, logOut } from '../actions/authed'
 import Sidebar from '../components/Sidebar'
@@ -12,9 +10,7 @@ class DashboardContainer extends React.Component {
   }
 
   componentWillMount() {
-    if(this.props.route.path != '/404') {
-        this.props.oncheckAuth()
-    }
+    if(this.props.route.path != '/404') this.props.oncheckAuth()
   }
 
   render() {
@@ -52,7 +48,7 @@ function mapActionsToProps(dispatch) {
   return {
   	oncheckAuth: () => dispatch(checkAuth()),
     onLogOut: () => dispatch(logOut()),
-  };
+  }
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(DashboardContainer)
