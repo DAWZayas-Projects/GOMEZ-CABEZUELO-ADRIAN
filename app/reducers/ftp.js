@@ -1,7 +1,23 @@
 import * as types from '../constants/ActionTypes';
 
 function concatSubDirInRootDir(state, infoHost) {
-  return
+  const reg = new RegExp('[\.a-zA-Z1-9]+',  'g')
+  const arrMatch = infoHost.root.match(reg)
+  const hostListCopy = state.hostList
+  const newHostList = insertSubDirectoriesIntoCorrespondDirectory(hostListCopy, arrMatch, infoHost.hostList)
+  return Object.assign({}, state, {hostList: newHostList})
+}
+
+
+function insertSubDirectoriesIntoCorrespondDirectory(arrList, arrMatch, arrNewList) {
+  return arrList.map( list => {
+    if(list.name === arrMatch[0] && list.subDir)
+      insertSubDirectoriesIntoCorrespondDirectory(list.subDir, arrMatch.slice(1, arrMatch.length), arrNewList)
+
+    if(list.name === arrMatch[0] && arrMatch.length === 1) list.subDir = arrNewList
+
+    return list
+  })
 }
 
 const ftp = (state = {}, action) => {

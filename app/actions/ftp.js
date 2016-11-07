@@ -13,7 +13,6 @@ export function ftpListDir(ftpInfo) {
             data : JSON.stringify(ftpInfo),
             async : true,
             success: function(data, status, xhr) {
-              debugger
                 if(data.status == 400) {
                   objToDispatch = {
                     type : types.CONNEXION_FAIL,
@@ -26,13 +25,18 @@ export function ftpListDir(ftpInfo) {
                   }
 
                 } else {
-                  const type = (data.root === '/') ? types.LIST_INIT_ROOT : types.LIST_NO_INIT_ROOT
-                  debugger
+                  const type     = (data.root === '/') ? types.LIST_INIT_ROOT : types.LIST_NO_INIT_ROOT
+                  const hostList = data.list.map( list =>
+                    Object.assign(
+                      {},
+                      list,
+                      { root: data.root === '/' ? data.root + list.name : data.root + '/' +list.name }
+                    ))
                   objToDispatch = {
                     type : type,
                     payload: {
                       message: 'Connection success',
-                      hostList: data.list,
+                      hostList: hostList,
                       connexion: true,
                       root: data.root,
                     }

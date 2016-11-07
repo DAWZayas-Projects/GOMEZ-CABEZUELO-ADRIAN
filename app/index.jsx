@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-
+import DevTools from './containers/DevTools';
 
 import configureStore from './store/configureStore'
 import App from './containers/App'
@@ -15,7 +15,10 @@ const store = configureStore();
 
 render(
 	  <Provider store={store}>
-	      <App  />
+			<div>
+				<App  />
+				<DevTools />
+			</div>
 	  </Provider>,
 	  document.getElementById('page-container')
 )

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { checkAuth, logOut } from '../actions/authed'
 import { ftpListDir } from '../actions/ftp'
 import Sidebar from '../components/Sidebar'
+import DirectoryFtp from '../components/DirectoryFtp'
 
 class ConnectionFtpContainer extends React.Component {
 
@@ -17,11 +18,49 @@ class ConnectionFtpContainer extends React.Component {
   onSubmit(event, root = '/') {
       event.preventDefault()
       this.props.onFtpListDir({
-        host:this.refs.hostList.value,
+        host:this.refs.host.value,
         user:this.refs.user.value,
         password :this.refs.password.value,
         root,
       })
+  }
+
+  printDirectory(directory, index) {
+    return (
+      <DirectoryFtp
+          dir           = {directory}
+          key           = {index}
+          host          = {this.refs.host.value}
+          user          = {this.refs.user.value}
+          password      = {this.refs.password.value}
+          root          = {directory.root}
+          ListDirectory = { this.props.onFtpListDir.bind(this) }
+        />
+    )
+  }
+
+  printAllDirectory(directory, index) {
+    if (directory.subDir) {
+      return (
+        <div>
+        {this.printDirectory(directory, index)}
+        {this.printFiles(directory.subDir)}
+        </div>
+      )
+    }
+    return this.printDirectory(directory, index)
+  }
+
+  printFiles(files) {
+    return(
+      <ul>
+      {files.map( (file, index) => {
+          return file.type === 'd'
+          ? this.printAllDirectory(file, index)
+          : <li key={index}>{file.name}</li>
+      })}
+      </ul>
+    )
   }
 
   render() {
@@ -59,15 +98,15 @@ class ConnectionFtpContainer extends React.Component {
               </div>
           </div>
 
-          <div className="col-sm-8">
+          <div className="col-sm-offset-4 col-sm-8">
               <h1 className="page-header">List Host</h1>
 
               <div className="row">
-                <ul>
+
                 {
-                  hostList.map( (list, index) => <li key={index}>{list.name}</li> )
+                  (hostList.length > 0) ? this.printFiles(hostList) : ''
                 }
-                </ul>
+
               </div>
 
           </div>
