@@ -6,7 +6,7 @@ import Sequelize from 'sequelize'
 
 const LOG = log4js.getLogger('file');
 
-let User = sequelize.define('user', {
+let User = sequelize.define('users', {
   name: {
     type: Sequelize.STRING,
     allowNull: false,
