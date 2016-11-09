@@ -34,3 +34,15 @@ body { min-height: 100%; }
   left: 0;
   right: 0;
 }
+
+li {
+  list-style-type: none;
+}
+
+custom-directory {
+  cursor: pointer;
+}
+
+custom-file {
+  cursor: pointer;
+}
