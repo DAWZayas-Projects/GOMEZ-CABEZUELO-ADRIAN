@@ -6,11 +6,16 @@ class FileButtons extends React.Component {
     super(props)
   }
 
+  onClickCreate(event) {
+      event.stopPropagation()
+      this.props.onCreate(event);
+  }
+
   render() {
 
     return (
       <div className="btn-group">
-        <button type="button" onClick={() => this.props.onCreate()} className="btn btn-success">Create</button>
+        <button type="button" onClick={this.props.onCreate.bind(null, event)} className="btn btn-success">Create</button>
         <button type="button" onClick={() => this.props.onRename()} className="btn btn-warning">Rename</button>
         <button type="button" onClick={() => this.props.onDelete()} className="btn btn-danger">Remove</button>
       </div>

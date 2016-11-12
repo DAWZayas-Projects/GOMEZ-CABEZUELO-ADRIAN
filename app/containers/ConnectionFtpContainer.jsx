@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { checkAuth, logOut } from '../actions/authed'
-import { ftpListDir } from '../actions/ftp'
+import { ftpListDir, createFtp } from '../actions/ftp'
 import Sidebar from '../components/Sidebar'
 import DirectoryFtp from '../components/DirectoryFtp'
 import FileFtp from '../components/FileFtp'
@@ -24,11 +24,22 @@ class ConnectionFtpContainer extends React.Component {
   onSubmit(event, root = '/') {
       event.preventDefault()
       this.props.onFtpListDir({
-        host:this.refs.host.value,
-        user:this.refs.user.value,
-        password :this.refs.password.value,
+        host :     this.refs.host.value,
+        user :     this.refs.user.value,
+        password : this.refs.password.value,
         root,
       })
+  }
+
+  onCreateDIrOrFile(event) {
+    event.stopPropagation()
+    this.props.onCreateFtp({
+      host :        this.refs.host.value,
+      user :        this.refs.user.value,
+      password :    this.refs.password.value,
+      root :        this.state.rootDirectory,
+      newDirOrFile: this.refs.newDirOrFile.value,
+    })
   }
 
   printDirectory(directory, index) {
@@ -76,7 +87,7 @@ class ConnectionFtpContainer extends React.Component {
     return(
       <ul>
         {files.map( (file, index) => {
-          return file.type === 'd'
+          return file && file.type === 'd'
           ? this.printAllDirectory(file, index)
           : this.printFile(file, index)
         })}
@@ -130,15 +141,16 @@ class ConnectionFtpContainer extends React.Component {
           <div className="col-sm-offset-4 col-sm-8">
 
             <div className="form-group">
-              <label htmlFor="host">Actual root</label>
-              <input type="text" className="form-control" ref="actualRoot" value={this.state.rootDirectory} />
+              <label htmlFor="actualRoot">Actual root</label>
+              <input type="text" className="form-control" id="actualRoot"  ref="actualRoot" readOnly value={this.state.rootDirectory} />
             </div>
             <div className="form-group">
-              <label htmlFor="user">New</label>
-              <input type="text" className="form-control" />
+              <label htmlFor="newDirOrFile">New</label>
+              <input type="text" ref="newDirOrFile" id="newDirOrFile" className="form-control" />
             </div>
-
-            <FileButtons />
+            <FileButtons
+                onCreate={() => this.onCreateDIrOrFile(event)}
+            />
 
             <h1 className="page-header">List Host</h1>
 
@@ -172,6 +184,7 @@ function mapActionsToProps(dispatch) {
     oncheckAuth: () => dispatch(checkAuth()),
     onLogOut: () => dispatch(logOut()),
     onFtpListDir: (ftpInfo) => dispatch(ftpListDir(ftpInfo)),
+    onCreateFtp: (ftpInfo)  => dispatch(createFtp(ftpInfo)),
   }
 }
 

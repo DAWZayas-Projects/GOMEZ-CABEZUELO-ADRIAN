@@ -1,23 +1,24 @@
-import * as types from '../constants/ActionTypes';
-import $ from 'jquery';
-import history from '../store/history';
+import * as types from '../constants/ActionTypes'
+import $ from 'jquery'
+import history from '../store/history'
+import { regex } from '../helper/regex'
+import 'whatwg-fetch'
 
-import 'whatwg-fetch';
 
-export function ftpListDir(ftpInfo) {
+function executePostActionToFtp(ftpInfo, url) {
   return dispatch => {
-    let objToDispatch;
-    $.ajax('/ftp/connect', {
+    let objToDispatch
+    $.ajax(url, {
             type: "POST",
             contentType: "application/json; charset=utf-8",
             data : JSON.stringify(ftpInfo),
             async : true,
-            success: function(data, status, xhr) {
+            success: (data, status, xhr) => {
                 if(data.status == 400) {
                   objToDispatch = {
                     type : types.CONNEXION_FAIL,
                     payload: {
-                      message: 'Error connecting to host',
+                      message: data.message,
                       hostList: data.list,
                       connexion: false,
                       root: '',
@@ -35,7 +36,7 @@ export function ftpListDir(ftpInfo) {
                   objToDispatch = {
                     type : type,
                     payload: {
-                      message: 'Connection success',
+                      message: data.message,
                       hostList: hostList,
                       connexion: true,
                       root: data.root,
@@ -49,6 +50,15 @@ export function ftpListDir(ftpInfo) {
                 withCredentials: true
             },
             crossDomain: true
-    });
+    })
   }
+}
+
+
+export const ftpListDir = (ftpInfo) => {
+  return executePostActionToFtp(ftpInfo, '/ftp/connect')
+}
+
+export const createFtp = (ftpInfo) => {
+  return executePostActionToFtp(ftpInfo, '/ftp/create')
 }

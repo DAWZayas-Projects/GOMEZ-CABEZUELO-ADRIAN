@@ -9,6 +9,7 @@ module.exports = {
     main : [
       'webpack-hot-middleware/client?http:localhost:9000',
       'webpack/hot/only-dev-server',
+      'babel-polyfill',
       './app/index'
     ],
     vendor : [

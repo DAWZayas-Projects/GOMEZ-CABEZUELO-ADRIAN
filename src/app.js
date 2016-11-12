@@ -21,7 +21,6 @@ app.use(middleware())
 //configure custom routes
 app.use(routes())
 
-
 app.listen(config.app.port)
 LOG.info("Server started, listening on port: " + config.app.port)
 

@@ -17,6 +17,8 @@
   "dependencies": {
     "amqplib": "^0.4.2",
     "bcryptjs": "^2.3.0",
+    "bluebird": "^3.4.6",
+    "co-fs": "^1.2.0",
     "excel-export": "^0.5.1",
     "fivebeans": "^1.4.1",
     "font-awesome": "^4.7.0",
