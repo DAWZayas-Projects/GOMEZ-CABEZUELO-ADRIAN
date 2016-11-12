@@ -10,13 +10,21 @@ class DirectoryFtp extends React.Component {
     event.preventDefault()
     const {host, user, password, root} = this.props
     this.props.ListDirectory({ host, user, password, root })
-    this.props.ChangeRoot(event, this.props.root)
+  }
+
+  onClickDirectory(event) {
+    event.preventDefault()
+    const {root} = this.props
+    this.props.ChangeRoot(event, root)
   }
 
   render() {
 
     return (
-        <li className="custom-directory btn-info" onClick={ (event) => this.onClickListDirectory(event) } >{ this.props.dir.name } - { this.props.dir.date }</li>
+        <li className="custom-directory" onClick={ (event) => this.onClickDirectory(event) } >
+          { this.props.dir.name } -
+          <button className="btn btn-info pull-rigth" onClick={ (event) => this.onClickListDirectory(event) }>see</button>
+        </li>
     )
   }
 }

@@ -3,7 +3,9 @@
 
 src/config/config.js
 
-### Node ###
+*-compiled
+
+### Node ###-
 # Logs
 logs
 *.log

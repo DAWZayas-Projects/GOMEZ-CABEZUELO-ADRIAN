@@ -19,3 +19,8 @@ export const rm = (file) => {
       })
     })
 }
+
+
+export const isDir = (path) => {
+  return (path.indexOf('.') === -1)
+}

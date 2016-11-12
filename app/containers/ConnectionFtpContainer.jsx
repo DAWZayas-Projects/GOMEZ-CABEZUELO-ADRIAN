@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { checkAuth, logOut } from '../actions/authed'
-import { ftpListDir, createFtp } from '../actions/ftp'
+import { ftpListDir, createFtp, removeFtp } from '../actions/ftp'
 import Sidebar from '../components/Sidebar'
 import DirectoryFtp from '../components/DirectoryFtp'
 import FileFtp from '../components/FileFtp'
@@ -34,6 +34,17 @@ class ConnectionFtpContainer extends React.Component {
   onCreateDIrOrFile(event) {
     event.stopPropagation()
     this.props.onCreateFtp({
+      host :        this.refs.host.value,
+      user :        this.refs.user.value,
+      password :    this.refs.password.value,
+      root :        this.state.rootDirectory,
+      newDirOrFile: this.refs.newDirOrFile.value,
+    })
+  }
+
+  onDeleteDIrOrFile(event) {
+    event.stopPropagation()
+    this.props.onDeleteFtp({
       host :        this.refs.host.value,
       user :        this.refs.user.value,
       password :    this.refs.password.value,
@@ -150,6 +161,7 @@ class ConnectionFtpContainer extends React.Component {
             </div>
             <FileButtons
                 onCreate={() => this.onCreateDIrOrFile(event)}
+                onDelete={() => this.onDeleteDIrOrFile(event)}
             />
 
             <h1 className="page-header">List Host</h1>
@@ -185,6 +197,7 @@ function mapActionsToProps(dispatch) {
     onLogOut: () => dispatch(logOut()),
     onFtpListDir: (ftpInfo) => dispatch(ftpListDir(ftpInfo)),
     onCreateFtp: (ftpInfo)  => dispatch(createFtp(ftpInfo)),
+    onDeleteFtp: (ftpInfo)  => dispatch(removeFtp(ftpInfo)),
   }
 }
 

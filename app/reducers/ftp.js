@@ -26,6 +26,10 @@ const ftp = (state = {}, action) => {
       return Object.assign({}, state, action.payload)
     case types.LIST_NO_INIT_ROOT:
       return concatSubDirInRootDir(state, action.payload)
+    case types.CREATE_SUCCESS:
+      return state
+    case types.DELETE_SUCCESS:
+      return state
     default:
       return state
   }
