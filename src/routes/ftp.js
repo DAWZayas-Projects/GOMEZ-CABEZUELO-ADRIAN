@@ -17,4 +17,8 @@ router.post('/delete', async (ctx, next) => {
   await FtpControllers.removeFileOrDirectory(ctx, next)
 })
 
+router.post('/move', async (ctx, next) => {
+  await FtpControllers.moveFileOrDirectory(ctx, next)
+})
+
 export default router

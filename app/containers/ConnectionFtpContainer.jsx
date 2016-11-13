@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { checkAuth, logOut } from '../actions/authed'
-import { ftpListDir, createFtp, removeFtp } from '../actions/ftp'
+import { ftpListDir, createFtp, removeFtp, moveFtp } from '../actions/ftp'
 import Sidebar from '../components/Sidebar'
 import DirectoryFtp from '../components/DirectoryFtp'
 import FileFtp from '../components/FileFtp'
@@ -45,6 +45,17 @@ class ConnectionFtpContainer extends React.Component {
   onDeleteDIrOrFile(event) {
     event.stopPropagation()
     this.props.onDeleteFtp({
+      host :        this.refs.host.value,
+      user :        this.refs.user.value,
+      password :    this.refs.password.value,
+      root :        this.state.rootDirectory,
+      newDirOrFile: this.refs.newDirOrFile.value,
+    })
+  }
+
+  onMoveDirOrFile(event) {
+    event.stopPropagation()
+    this.props.onMoveFtp({
       host :        this.refs.host.value,
       user :        this.refs.user.value,
       password :    this.refs.password.value,
@@ -160,8 +171,9 @@ class ConnectionFtpContainer extends React.Component {
               <input type="text" ref="newDirOrFile" id="newDirOrFile" className="form-control" />
             </div>
             <FileButtons
-                onCreate={() => this.onCreateDIrOrFile(event)}
-                onDelete={() => this.onDeleteDIrOrFile(event)}
+              onCreate={() => this.onCreateDIrOrFile(event)}
+              onDelete={() => this.onDeleteDIrOrFile(event)}
+              onMove={() => this.onMoveDirOrFile(event)}
             />
 
             <h1 className="page-header">List Host</h1>
@@ -198,6 +210,7 @@ function mapActionsToProps(dispatch) {
     onFtpListDir: (ftpInfo) => dispatch(ftpListDir(ftpInfo)),
     onCreateFtp: (ftpInfo)  => dispatch(createFtp(ftpInfo)),
     onDeleteFtp: (ftpInfo)  => dispatch(removeFtp(ftpInfo)),
+    onMoveFtp: (ftpInfo)  => dispatch(moveFtp(ftpInfo)),
   }
 }
 

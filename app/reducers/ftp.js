@@ -30,6 +30,8 @@ const ftp = (state = {}, action) => {
       return state
     case types.DELETE_SUCCESS:
       return state
+    case types.MOVE_SUCCESS:
+      return state
     default:
       return state
   }
