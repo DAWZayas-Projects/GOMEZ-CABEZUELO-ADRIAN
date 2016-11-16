@@ -29,10 +29,10 @@ export default function middleware(app) {
 
     app.use(cors({ credentials: true }));
     app.use(convert(Logger()))
-    app.use(bodyParser())
+    app.use(bodyParser({strict: false}))
     app.use(mount("/", convert(Serve(__dirname + '/../public/'))));
 
-    app.keys = ['superalsrk-session-key'];
+    app.keys = ['kooooaaaa-session-key'];
     app.use(convert(session()))
 
     app.use(passport.initialize())

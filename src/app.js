@@ -6,7 +6,6 @@ import middleware from './middleware'
 import routes from './routes'
 import config from './config/config'
 import log4js from 'log4js'
-import User from './models/user'
 
 const app = new Koa()
 const LOG = log4js.getLogger('file')

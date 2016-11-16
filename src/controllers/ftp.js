@@ -48,11 +48,11 @@ export const moveFileOrDirectory = async (ctx, next) => {
   const pathNewDirOrFile = ctx.request.body.newDirOrFile
   const movePromise    = move(ctx, next)
   const rootReturned     = await PromiseAllReturnedValues([ pathNewDirOrFile, movePromise ], 0)
-
+console.log(rootReturned);
   ctx.body = {
-    status:  (rootReturned !== 'reject') ? 200 : 500,
+    status:  (rootReturned) ? 200 : 500,
     root:    pathNewDirOrFile,
-    message: (rootReturned !== 'reject') ? 'Rename success' : 'Rename error'
+    message: (rootReturned) ? 'Rename success' : 'Rename error'
   }
 }
 
@@ -106,9 +106,9 @@ export const removeFileOrDirectory = async(ctx, next) => {
   const rootReturned = await PromiseAllReturnedValues([ pathInFtp ,promise], 0)
 
   ctx.body = {
-    status: (rootReturned !== 'reject') ? 200 : 500,
+    status: (rootReturned) ? 200 : 500,
     root: pathInFtp,
-    message: (rootReturned !== 'reject') ? 'Delete success' : 'Delete error'
+    message: (rootReturned) ? 'Delete success' : 'Delete error'
   }
 }
 
@@ -127,9 +127,9 @@ export const createFileOrDirectory = async(ctx, next) => {
   const pathInFtp = (!isDir(nameFileOrDir)) ? await createFile(ctx, next) : await createDir(ctx, next)
 
   ctx.body = {
-    status: (pathInFtp !== 'reject') ? 200 : 500,
+    status: (pathInFtp) ? 200 : 500,
     root: pathInFtp,
-    message: (pathInFtp !== 'reject') ? 'Create success' : 'Create error'
+    message: (pathInFtp) ? 'Create success' : 'Create error'
   }
 
 }

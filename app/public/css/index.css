@@ -3,6 +3,8 @@
 @import "font-awesome.css";
 @import "sidebar.css";
 @import "dashboard.css";
+@import "dropzone.min.css";
+@import "filepicker.css";
 
 .form-login {
   background: rgba(179, 179, 179, 0.5);

@@ -1,12 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { checkAuth, logOut } from '../actions/authed'
-import { ftpListDir, createFtp, removeFtp, moveFtp } from '../actions/ftp'
+import { ftpListDir, createFtp, removeFtp, moveFtp, uploadFtp } from '../actions/ftp'
 import Sidebar from '../components/Sidebar'
 import DirectoryFtp from '../components/DirectoryFtp'
 import FileFtp from '../components/FileFtp'
 import FileButtons from '../components/FileButtons'
-
+import FormDropzone from '../components/FormDropzone'
 
 class ConnectionFtpContainer extends React.Component {
 
@@ -62,6 +62,22 @@ class ConnectionFtpContainer extends React.Component {
       root :        this.state.rootDirectory,
       newDirOrFile: this.refs.newDirOrFile.value,
     })
+  }
+
+  onUploadFile(event, body) {
+    event.stopPropagation()
+    debugger
+    const host     = this.refs.host.value
+    const user     = this.refs.user.value
+    const password = this.refs.password.value
+    const root     = this.state.rootDirectory
+
+    body.append(host, host);
+    body.append(user, user);
+    body.append(password, password);
+    body.append(root, root);
+
+    this.props.onUploadFtp(body)
   }
 
   printDirectory(directory, index) {
@@ -166,15 +182,25 @@ class ConnectionFtpContainer extends React.Component {
               <label htmlFor="actualRoot">Actual root</label>
               <input type="text" className="form-control" id="actualRoot"  ref="actualRoot" readOnly value={this.state.rootDirectory} />
             </div>
-            <div className="form-group">
-              <label htmlFor="newDirOrFile">New</label>
-              <input type="text" ref="newDirOrFile" id="newDirOrFile" className="form-control" />
+
+            <div className="row">
+              <div className="col-sm-6">
+                <div className="form-group">
+                  <label htmlFor="newDirOrFile">New</label>
+                  <input type="text" ref="newDirOrFile" id="newDirOrFile" className="form-control" />
+                </div>
+                <FileButtons
+                  onCreate={() => this.onCreateDIrOrFile(event)}
+                  onDelete={() => this.onDeleteDIrOrFile(event)}
+                  onMove={() => this.onMoveDirOrFile(event)}
+                />
+              </div>
+              <div className="col-sm-6">
+                <FormDropzone
+                  onUpload = {(file) => this.onUploadFile(event, file)}
+                />
+              </div>
             </div>
-            <FileButtons
-              onCreate={() => this.onCreateDIrOrFile(event)}
-              onDelete={() => this.onDeleteDIrOrFile(event)}
-              onMove={() => this.onMoveDirOrFile(event)}
-            />
 
             <h1 className="page-header">List Host</h1>
 
@@ -208,9 +234,10 @@ function mapActionsToProps(dispatch) {
     oncheckAuth: () => dispatch(checkAuth()),
     onLogOut: () => dispatch(logOut()),
     onFtpListDir: (ftpInfo) => dispatch(ftpListDir(ftpInfo)),
-    onCreateFtp: (ftpInfo)  => dispatch(createFtp(ftpInfo)),
-    onDeleteFtp: (ftpInfo)  => dispatch(removeFtp(ftpInfo)),
-    onMoveFtp: (ftpInfo)  => dispatch(moveFtp(ftpInfo)),
+    onCreateFtp:  (ftpInfo) => dispatch(createFtp(ftpInfo)),
+    onDeleteFtp:  (ftpInfo) => dispatch(removeFtp(ftpInfo)),
+    onMoveFtp:    (ftpInfo) => dispatch(moveFtp(ftpInfo)),
+    onUploadFtp:     (body)    => dispatch(uploadFtp(body)),
   }
 }
 
