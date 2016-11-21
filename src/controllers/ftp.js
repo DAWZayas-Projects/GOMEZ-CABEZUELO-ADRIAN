@@ -163,7 +163,12 @@ const createFile = async(ctx, next) => {
 
   const nameFile = ctx.request.body.newDirOrFile
   const touchPromise = touch('src/tmp/' + nameFile)
-  const uploadPromise = uploadToFtp(ctx, next, 'src/tmp/' + nameFile)
+  const uploadPromise = uploadToFtp({
+                                      host: ctx.request.body.host,
+                                      user: ctx.request.body.user,
+                                      password: ctx.request.body.password,
+                                      root: ctx.request.body.root,
+                                      }, next, 'src/tmp/' + nameFile)
   const pathPromise = ctx.request.body.root + '/' + nameFile
   const rmPromise = rm('src/tmp/' + nameFile)
 
@@ -171,15 +176,32 @@ const createFile = async(ctx, next) => {
 
 }
 
+export const uploadFile = async (ctx, next) => {
+  const tmpPath = ctx.req.files.path
+  const newPath = ctx.req.files.destination + ctx.req.files.originalname
+console.log()
+  try {
+    await rename(tmpPath, newPath)
+    await uploadToFtp({
 
-export const uploadToFtp = (ctx, next, rootLocalFile = false) => {
+                      }, next, newPath)
+  } catch (e) {
+    throw e
+  }
 
-  const host = ctx.request.body.host
-  const user = ctx.request.body.user
-  const password = ctx.request.body.password
-  const root = ctx.request.body.root
-  const ftp = new PromiseFtp()
-  const rootFile = rootLocalFile // when no nameFile upload the file in ctx ... no implement yet
+
+
+}
+
+
+export const uploadToFtp = (obj, next, rootLocalFile = false) => {
+
+  const host      = obj.host
+  const user      = obj.user
+  const password  = obj.password
+  const root      = obj.root
+  const ftp       = new PromiseFtp()
+  const rootFile  = rootLocalFile // when no nameFile upload the file in ctx ... no implement yet
   const pathInFtp = root + '/' + takeLastValueOfArray(transformUrlIntoArrayPath(rootFile))
 
   return ftp.connect({host: host, user: user, password: password, connTimeout: 40000})

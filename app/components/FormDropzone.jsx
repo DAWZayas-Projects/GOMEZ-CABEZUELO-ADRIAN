@@ -10,27 +10,24 @@ class FormDropzone extends Component {
     this.djsConfig = {
       addRemoveLinks: true,
       acceptedFiles: "image/jpeg,image/png,image/gif",
-      autoProcessQueue: false
+      autoProcessQueue: true
     };
 
     this.componentConfig = {
       iconFiletypes: ['.jpg', '.png', '.gif'],
       showFiletypeIcon: true,
-      postUrl: 'no-url'
+      postUrl: 'ftp/upload'
     };
   }
 
-  uploadFtp() {
-
-    const files = this.refs.dropzone.dropzone.files
-    //need tpo implement
-  }
 
 
-
-  handleFileAdded(file) {
-    console.log(file);
-    this.uploadFtp(file)
+  handleFileAdded(file, xhr, formData) {
+    formData.append('file', file)
+    formData.append('host', this.porps.host)
+    formData.append('password', this.porps.password)
+    formData.append('user', this.porps.user)
+    formData.append('root', this.porps.root)
   }
 
   render() {
@@ -38,14 +35,11 @@ class FormDropzone extends Component {
     const djsConfig = this.djsConfig;
 
     const eventHandlers = {
-      addedfile: this.handleFileAdded.bind(this),
+      sending: this.handleFileAdded.bind(this),
     }
     return (
       <div>
         <DropzoneComponent ref="dropzone" config={config} eventHandlers={eventHandlers} djsConfig={djsConfig}/>
-        <button className="btn btn-success" type="submit" onClick={() => this.uploadFtp()}>
-          Submit
-        </button>
       </div>
     );
   }

@@ -20,6 +20,15 @@ export const rm = (file) => {
     })
 }
 
+export const rename = (oldPath, newPath) => {
+  return new Promise((resolve, reject) => {
+      fs.rename(oldPath, newPath, (err) => {
+      if(err) reject(err)
+      resolve()
+      })
+    })
+
+}
 
 export const isDir = (path) => {
   return (path.indexOf('.') === -1)
