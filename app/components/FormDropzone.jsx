@@ -1,6 +1,6 @@
 import React, { Component, PropTypes, } from 'react';
 import DropzoneComponent from 'react-dropzone-component';
-import $ from 'jquery'
+
 
 class FormDropzone extends Component {
 
@@ -24,10 +24,10 @@ class FormDropzone extends Component {
 
   handleFileAdded(file, xhr, formData) {
     formData.append('file', file)
-    formData.append('host', this.porps.host)
-    formData.append('password', this.porps.password)
-    formData.append('user', this.porps.user)
-    formData.append('root', this.porps.root)
+    formData.append('host', this.props.host)
+    formData.append('password', this.props.password)
+    formData.append('user', this.props.user)
+    formData.append('root', this.props.root)
   }
 
   render() {

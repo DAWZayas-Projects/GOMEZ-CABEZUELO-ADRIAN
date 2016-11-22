@@ -32,6 +32,8 @@ const ftp = (state = {}, action) => {
       return state
     case types.MOVE_SUCCESS:
       return state
+    case types.FTP_CREDENTIALS:
+      return Object.assign({}, state, action.payload)
     default:
       return state
   }

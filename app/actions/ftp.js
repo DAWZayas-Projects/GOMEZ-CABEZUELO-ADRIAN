@@ -7,7 +7,17 @@ import 'whatwg-fetch'
 
 function executePostActionToFtp(ftpInfo, url) {
   return dispatch => {
+    debugger
     let objToDispatch
+    dispatch({
+      type:    types.FTP_CREDENTIALS,
+      payload: {
+        host:     ftpInfo.host,
+        user:     ftpInfo.user,
+        password: ftpInfo.password,
+        root:     ftpInfo.root,
+      }
+    })
     $.ajax(url, {
             type: "POST",
             contentType: "application/json; charset=utf-8",
