@@ -3,6 +3,7 @@
 import sequelize from '../lib/sequelize';
 import log4js from 'log4js';
 import Sequelize from 'sequelize'
+import History from './ftpHistory'
 
 const LOG = log4js.getLogger('file');
 
@@ -43,6 +44,7 @@ let User = sequelize.define('users', {
   freezeTableName: true // Model tableName will be the same as the model name
 });
 
+User.hasMany(History)
 
 User.findOneByUserName = async (name) => {
   return await User.findOne({

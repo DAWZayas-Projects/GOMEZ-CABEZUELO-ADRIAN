@@ -4,7 +4,7 @@ import log4js from 'log4js'
 import {touch, rm, isDir, rename} from '../helpers/files'
 import {transformUrlIntoArrayPath} from '../helpers/regex'
 import {takeLastValueOfArray, removeLasValueOfArray, PromiseAllReturnedValues} from '../helpers/functions'
-
+import History from '../models/ftpHistory'
 
 const LOG = log4js.getLogger('file')
 
@@ -46,9 +46,14 @@ export const connectToFtp = (ctx, next, message = false) => {
 export const moveFileOrDirectory = async (ctx, next) => {
 
   const pathNewDirOrFile = ctx.request.body.newDirOrFile
-  const movePromise    = move(ctx, next)
+  const movePromise      = move(ctx, next)
   const rootReturned     = await PromiseAllReturnedValues([ pathNewDirOrFile, movePromise ], 0)
-console.log(rootReturned);
+
+  const host   = ctx.request.body.host
+  const user   = ctx.request.body.user
+  const userId = ctx.req.user.dataValues.id
+  if(rootReturned) await History.createNewFtpHistory ({host, user, root: pathNewDirOrFile, action: 'MOVE/RENAME'}, userId)
+
   ctx.body = {
     status:  (rootReturned) ? 200 : 500,
     root:    pathNewDirOrFile,
@@ -105,6 +110,9 @@ export const removeFileOrDirectory = async(ctx, next) => {
 
   const rootReturned = await PromiseAllReturnedValues([ pathInFtp ,promise], 0)
 
+  const userId = ctx.req.user.dataValues.id
+  if(rootReturned) await History.createNewFtpHistory ({host, user, root, action: 'DELETE'}, userId)
+
   ctx.body = {
     status: (rootReturned) ? 200 : 500,
     root: pathInFtp,
@@ -125,6 +133,12 @@ export const createFileOrDirectory = async(ctx, next) => {
   }
 
   const pathInFtp = (!isDir(nameFileOrDir)) ? await createFile(ctx, next) : await createDir(ctx, next)
+  const host   = ctx.request.body.host
+  const user   = ctx.request.body.user
+  const userId = ctx.req.user.dataValues.id
+  const root   = ctx.request.body.root + '/' + ctx.request.body.newDirOrFile
+
+  if(pathInFtp) await History.createNewFtpHistory ({host, user, root, action: 'CREATE'}, userId)
 
   ctx.body = {
     status: (pathInFtp) ? 200 : 500,
