@@ -23,11 +23,11 @@ class FormDropzone extends Component {
 
 
   handleFileAdded(file, xhr, formData) {
-    formData.append('file', file)
-    formData.append('host', this.props.host)
-    formData.append('password', this.props.password)
-    formData.append('user', this.props.user)
-    formData.append('root', this.props.root)
+
+    formData.append('host', this.props.ftp.host)
+    formData.append('password', this.props.ftp.password)
+    formData.append('user', this.props.ftp.user)
+    formData.append('root', this.props.ftp.root)
   }
 
   render() {

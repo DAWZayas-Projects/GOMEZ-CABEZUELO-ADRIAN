@@ -15,4 +15,8 @@ export const DELETE_SUCCESS = 'DELETE_SUCCESS'
 export const MOVE_SUCCESS = 'MOVE_SUCCESS'
 
 export const FTP_CREDENTIALS = 'FTP_CREDENTIALS'
+export const CHANGE_ROUTE = 'CHANGE_ROUTE'
+
+
+
 

@@ -34,6 +34,8 @@ const ftp = (state = {}, action) => {
       return state
     case types.FTP_CREDENTIALS:
       return Object.assign({}, state, action.payload)
+    case types.CHANGE_ROUTE:
+      return Object.assign({}, state, action.payload)
     default:
       return state
   }

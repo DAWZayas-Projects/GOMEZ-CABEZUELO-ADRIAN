@@ -1,7 +1,7 @@
 'use strict'
 import PromiseFtp from 'promise-ftp'
 import log4js from 'log4js'
-import {touch, rm, isDir} from '../helpers/files'
+import {touch, rm, isDir, rename} from '../helpers/files'
 import {transformUrlIntoArrayPath} from '../helpers/regex'
 import {takeLastValueOfArray, removeLasValueOfArray, PromiseAllReturnedValues} from '../helpers/functions'
 
@@ -177,19 +177,23 @@ const createFile = async(ctx, next) => {
 }
 
 export const uploadFile = async (ctx, next) => {
-  const tmpPath = ctx.req.files.path
-  const newPath = ctx.req.files.destination + ctx.req.files.originalname
-console.log()
+console.log(ctx.req)
+  const { file } = ctx.req.files
+  const { host, user, password, root } = ctx.req.body
+  const tmpPath = file[0].path
+  const newPath = file[0].destination + file[0].originalname
+  const objFtp  = {
+    host,
+    user,
+    password,
+    root
+  }
   try {
-    await rename(tmpPath, newPath)
-    await uploadToFtp({
-
-                      }, next, newPath)
+    const renamePrommise =  rename(tmpPath, newPath)
+    await PromiseAllReturnedValues([renamePrommise, uploadToFtp(objFtp, next, newPath)])
   } catch (e) {
     throw e
   }
-
-
 
 }
 

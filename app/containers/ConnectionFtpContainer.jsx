@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { checkAuth, logOut } from '../actions/authed'
-import { ftpListDir, createFtp, removeFtp, moveFtp, uploadFtp } from '../actions/ftp'
+import { ftpListDir, createFtp, removeFtp, moveFtp, uploadFtp, changeRoot } from '../actions/ftp'
 import Sidebar from '../components/Sidebar'
 import FormFtp from '../components/FormFtp'
 import FormManager from '../components/FormManager'
@@ -47,6 +47,7 @@ class ConnectionFtpContainer extends React.Component {
                 onMoveFtp    = {(ftpInfo) => this.props.onMoveFtp(ftpInfo)}
                 onUploadFtp  = {(ftpInfo) => this.props.onUploadFtp(ftpInfo)}
                 ftp          = {this.props.ftp}
+                onChangeRoot = {(newRoot) => this.props.changeRoot(newRoot)}
               />
           }
 
@@ -61,7 +62,7 @@ class ConnectionFtpContainer extends React.Component {
 function mapStateToProps(state) {
   return {
     user: state.user,
-    ftp: state.ftp,
+    ftp:  state.ftp,
   }
 }
 
@@ -73,7 +74,8 @@ function mapActionsToProps(dispatch) {
     onCreateFtp:  (ftpInfo) => dispatch(createFtp(ftpInfo)),
     onDeleteFtp:  (ftpInfo) => dispatch(removeFtp(ftpInfo)),
     onMoveFtp:    (ftpInfo) => dispatch(moveFtp(ftpInfo)),
-    onUploadFtp:     (body)    => dispatch(uploadFtp(body)),
+    onUploadFtp:  (body)    => dispatch(uploadFtp(body)),
+    changeRoot:   (newRoot) => dispatch(changeRoot(newRoot)),
   }
 }
 

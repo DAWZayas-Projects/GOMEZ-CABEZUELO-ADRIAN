@@ -8,55 +8,52 @@ class FormManager extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-      rootDirectory: '/',
-    }
   }
 
   onCreateDIrOrFile(event) {
     event.stopPropagation()
-    const { host, user, password } = this.props.ftp
+    const { host, user, password, root } = this.props.ftp
     this.props.onCreateFtp({
       host :        host,
       user :        user,
       password :    password,
-      root :        this.state.rootDirectory,
+      root :        root,
       newDirOrFile: this.refs.newDirOrFile.value,
     })
   }
 
   onDeleteDIrOrFile(event) {
     event.stopPropagation()
-    const { host, user, password } = this.props.ftp
+    const { host, user, password, root } = this.props.ftp
     this.props.onDeleteFtp({
       host :        host,
       user :        user,
       password :    password,
-      root :        this.state.rootDirectory,
+      root :        root,
       newDirOrFile: this.refs.newDirOrFile.value,
     })
   }
 
   onMoveDirOrFile(event) {
     event.stopPropagation()
-    const { host, user, password } = this.props.ftp
+    const { host, user, password, root } = this.props.ftp
     this.props.onMoveFtp({
       host :        host,
       user :        user,
       password :    password,
-      root :        this.state.rootDirectory,
+      root :        root,
       newDirOrFile: this.refs.newDirOrFile.value,
     })
   }
 
   onUploadFile(event, body) {
     event.stopPropagation()
-    const { host, user, password } = this.props.ftp
+    const { host, user, password, root } = this.props.ftp
 
     body.append(host, host);
     body.append(user, user);
     body.append(password, password);
-    body.append(root, this.state.rootDirectory);
+    body.append(root, root);
 
     this.props.onUploadFtp(body)
   }
@@ -118,9 +115,7 @@ class FormManager extends React.Component {
 
   onClickFile(event, root) {
     event.preventDefault()
-    this.setState({
-      rootDirectory: root,
-    })
+    this.props.onChangeRoot(root)
   }
 
   render() {
@@ -131,7 +126,7 @@ class FormManager extends React.Component {
 
         <div className="form-group">
           <label htmlFor="actualRoot">Actual root</label>
-          <input type="text" className="form-control" id="actualRoot"  ref="actualRoot" readOnly value={this.state.rootDirectory} />
+          <input type="text" className="form-control" id="actualRoot"  ref="actualRoot" readOnly value={this.props.ftp.root} />
         </div>
 
         <div className="row">
@@ -149,6 +144,7 @@ class FormManager extends React.Component {
           <div className="col-sm-6">
             <FormDropzone
               onUpload = {(file) => this.onUploadFile(event, file)}
+              ftp      = { this.props.ftp }
             />
           </div>
         </div>

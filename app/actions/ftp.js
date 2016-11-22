@@ -7,7 +7,6 @@ import 'whatwg-fetch'
 
 function executePostActionToFtp(ftpInfo, url) {
   return dispatch => {
-    debugger
     let objToDispatch
     dispatch({
       type:    types.FTP_CREDENTIALS,
@@ -63,7 +62,16 @@ function executePostActionToFtp(ftpInfo, url) {
     })
   }
 }
-
+export const changeRoot = (newRoot) => {
+  return dispatch => {
+    dispatch({
+      type: types.CHANGE_ROUTE,
+      payload: {
+        root: newRoot
+      }
+    })
+  }
+}
 
 export const ftpListDir = (ftpInfo) => {
   return executePostActionToFtp(ftpInfo, '/ftp/connect')
@@ -185,7 +193,6 @@ export const moveFtp = (ftpInfo) => {
 }
 
 export const uploadFtp = (body) => {
-debugger
   return dispatch => {
     $.ajax('/ftp/move', {
         type: "POST",
