@@ -5,7 +5,7 @@
   </head>
 
   <body class="pace-top bg-white">
-    <div id="page-container" class="fade in">
+    <div id="page-container" class="fade in" style="padding-bottom: 100px;">
 
     </div>
 

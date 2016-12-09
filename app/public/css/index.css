@@ -41,10 +41,34 @@ li {
   list-style-type: none;
 }
 
-custom-directory {
-  cursor: pointer;
+.custom-directory {
+  border: 1px grey solid;
+  border-radius: 5px;
+  padding: 4px;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 40px;
 }
 
-custom-file {
-  cursor: pointer;
+.custom-file {
+  border: 1px grey solid;
+  border-radius: 5px;
+  padding: 4px;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 40px;
 }
+
+.custom-file:hover {
+  cursor: pointer;
+  background-color: #5cb85c;
+  color: white;
+} 
+
+.custom-directory:hover {
+  cursor: pointer;
+  background-color: #5cb85c;
+  color: white;
+} 

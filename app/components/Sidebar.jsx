@@ -26,7 +26,12 @@ class Sidebar extends React.Component {
     return (
       <div className="nav-side-menu">
         <div className="brand">
-          <img src={photo} className="img-circle" height="50" width="50" />
+          {
+            photo === ''
+             ? ''
+             : <img src={photo} className="img-circle" height="50" width="50" />
+          }
+          
           {name}
         </div>
           <i className="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
@@ -44,7 +49,13 @@ class Sidebar extends React.Component {
                   <a href="#">
                   <i className="fa fa-paper-plane fa-lg" ></i> Connexion
                   </a>
-                </li>                                
+                </li>    
+
+                <li className="collapsed active" onClick={ (event) => this.props.onLogOut(event) }>
+                  <a href="#">
+                  <i className="fa fa-sign-out fa-lg" ></i> LogOut
+                  </a>
+                </li>                             
             </ul>
      </div>
 </div>

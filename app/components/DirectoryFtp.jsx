@@ -22,8 +22,13 @@ class DirectoryFtp extends React.Component {
 
     return (
         <li className="custom-directory" onClick={ (event) => this.onClickDirectory(event) } >
-          { this.props.dir.name } -
-          <button className="btn btn-info pull-rigth" onClick={ (event) => this.onClickListDirectory(event) }>see</button>
+          { this.props.dir.name } 
+          <div>
+            <i style={{'marginRight': '10px'}} className="fa fa-eye fa-sm" aria-hidden="true" 
+              onClick={ (event) => this.onClickListDirectory(event)}>
+            </i>
+            <i className="fa fa-folder-open-o" aria-hidden="true"></i>
+          </div>   
         </li>
     )
   }

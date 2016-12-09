@@ -20,7 +20,7 @@ class FormFtp extends React.Component {
   render() {
 
     return (
-      <div className="col-sm-8">
+      <div className="col-sm-6">
         <div className="row">
           <h1 className="page-header">New Connexion</h1>
           <form onSubmit={(e) => this.onSubmit(e)}>

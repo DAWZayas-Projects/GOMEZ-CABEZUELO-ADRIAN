@@ -122,43 +122,48 @@ class FormManager extends React.Component {
     const hostList  = this.props.ftp.hostList || []
 
     return (
-      <div className="col-sm-offset-4 col-sm-8">
-
-        <div className="form-group">
-          <label htmlFor="actualRoot">Actual root</label>
-          <input type="text" className="form-control" id="actualRoot"  ref="actualRoot" readOnly value={this.props.ftp.root} />
-        </div>
-
+      <div className="col-sm-offset-3 col-sm-9">
+        
+        <h1 className="page-header">Host: {this.props.ftp.host}</h1>
+        
         <div className="row">
           <div className="col-sm-6">
+
+            <div className="form-group">
+              <label htmlFor="actualRoot">Actual root</label>
+              <input type="text" className="form-control" id="actualRoot"  ref="actualRoot" readOnly value={this.props.ftp.root} />
+            </div>
+            
             <div className="form-group">
               <label htmlFor="newDirOrFile">New</label>
               <input type="text" ref="newDirOrFile" id="newDirOrFile" className="form-control" />
+            </div>  
+            
+            <div className="">
+              <FileButtons
+                onCreate={() => this.onCreateDIrOrFile(event)}
+                onDelete={() => this.onDeleteDIrOrFile(event)}
+                onMove={() => this.onMoveDirOrFile(event)}
+              />
             </div>
-            <FileButtons
-              onCreate={() => this.onCreateDIrOrFile(event)}
-              onDelete={() => this.onDeleteDIrOrFile(event)}
-              onMove={() => this.onMoveDirOrFile(event)}
-            />
-          </div>
-          <div className="col-sm-6">
+            <br />
+            <br />
             <FormDropzone
               onUpload = {(file) => this.onUploadFile(event, file)}
               ftp      = { this.props.ftp }
             />
+
           </div>
+
+          <div className="col-sm-5">
+            <div className="row">
+              {
+                (hostList.length > 0) ? this.printFiles(hostList) : ''
+              }
+            </div>
+          </div>
+
         </div>
-
-        <h1 className="page-header">List Host</h1>
-
-        <div className="row">
-
-          {
-            (hostList.length > 0) ? this.printFiles(hostList) : ''
-          }
-
-        </div>
-
       </div>
     )
   }

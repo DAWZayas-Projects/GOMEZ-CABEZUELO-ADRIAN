@@ -191,11 +191,12 @@ const createFile = async(ctx, next) => {
 }
 
 export const uploadFile = async (ctx, next) => {
-console.log(ctx.req)
+
   const { file } = ctx.req.files
   const { host, user, password, root } = ctx.req.body
   const tmpPath = file[0].path
   const newPath = file[0].destination + file[0].originalname
+  const userId = ctx.req.user.dataValues.id  
   const objFtp  = {
     host,
     user,
@@ -204,7 +205,14 @@ console.log(ctx.req)
   }
   try {
     const renamePrommise =  rename(tmpPath, newPath)
-    await PromiseAllReturnedValues([renamePrommise, uploadToFtp(objFtp, next, newPath)])
+    const pathToUpload   = root + '/' + takeLastValueOfArray(transformUrlIntoArrayPath(newPath))
+
+    const pathInFtp      = await PromiseAllReturnedValues(
+                                    [renamePrommise,
+                                     uploadToFtp(objFtp, next, newPath), 
+                                     pathToUpload
+                                    ], 2)
+    if(pathInFtp) await History.createNewFtpHistory ({host, user, pathInFtp, action: 'UPDATE'}, userId)
   } catch (e) {
     throw e
   }
