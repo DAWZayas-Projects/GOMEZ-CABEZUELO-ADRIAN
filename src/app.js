@@ -10,7 +10,6 @@ import log4js from 'log4js'
 const app = new Koa()
 const LOG = log4js.getLogger('file')
 
-
 //configure basic app
 baseconfig(app)
 

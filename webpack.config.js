@@ -18,6 +18,7 @@ module.exports = {
       'react-redux',
       'react-dom',
       'jquery',
+      'plot',
       'whatwg-fetch',
     ]
   },

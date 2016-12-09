@@ -2,6 +2,9 @@
 # Created by https://www.gitignore.io/api/node,eclipse,intellij
 
 src/config/config.js
+.vscode*
+yarn*
+src/public/assets/*
 
 *-compiled*
 src/tmp/*

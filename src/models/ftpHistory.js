@@ -4,6 +4,7 @@ import sequelize from '../lib/sequelize';
 import log4js from 'log4js';
 import Sequelize from 'sequelize'
 import User from './user'
+import moment from 'moment'
 
 const LOG = log4js.getLogger('file');
 
@@ -43,6 +44,24 @@ History.createNewFtpHistory = async (ftp, userId) => {
                     root:   ftp.root,
                 })
   })
+}
+
+History.getAllForThisMonth = async (userId) => {
+  const today = moment(moment(), 'YYYY-MM-DDTHH:mm:ss UTC');
+  const day                   = today.get('date')
+  const firstDateOfThisMonth  = today.clone().subtract(day - 1, 'days')
+
+  return await History.findAll({
+                where: {
+                  userId: userId,
+                  date: {
+                    gt: firstDateOfThisMonth,
+                    lte: today,  
+                  },
+                }
+              }).then(histories => {
+                return histories
+              })
 }
 
 export default History
