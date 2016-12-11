@@ -20,3 +20,4 @@ sequelize init              # Initializes the project.
 sequelize migration:create  # Generates a new migration file.  
 sequelize version           # Prints the version number.  
 
+Documentation https://agc11.gitbooks.io/project-daw/content/
