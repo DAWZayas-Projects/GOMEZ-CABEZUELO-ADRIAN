@@ -1,4 +1,5 @@
-# Proyect with koa2, redux and react
+
+# Project with koa2, redux and react
 
 Application for uploading files via ftp and have a record
 
@@ -18,3 +19,4 @@ sequelize help              # Display this help text.
 sequelize init              # Initializes the project.  
 sequelize migration:create  # Generates a new migration file.  
 sequelize version           # Prints the version number.  
+
