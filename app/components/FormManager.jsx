@@ -3,6 +3,7 @@ import DirectoryFtp from '../components/DirectoryFtp'
 import FileFtp from '../components/FileFtp'
 import FileButtons from '../components/FileButtons'
 import FormDropzone from '../components/FormDropzone'
+import * as customFunctions from '../helper/functions'
 
 class FormManager extends React.Component {
 
@@ -63,7 +64,7 @@ class FormManager extends React.Component {
     return (
       <DirectoryFtp
         dir           = { directory }
-        key           = { index }
+        key           = { customFunctions.randomNumber() }
         host          = { host }
         user          = { user }
         password      = { password }
@@ -79,7 +80,7 @@ class FormManager extends React.Component {
     return (
       <FileFtp
         file          = { file }
-        key           = { index }
+        key           = { customFunctions.randomNumber() }
         host          = { host }
         user          = { user }
         password      = { password }
@@ -92,7 +93,7 @@ class FormManager extends React.Component {
   printAllDirectory(directory, index) {
     if (directory.subDir) {
       return (
-        <div>
+        <div key = { customFunctions.randomNumber() }>
           {this.printDirectory(directory, index)}
           {this.printFiles(directory.subDir)}
         </div>
@@ -103,7 +104,7 @@ class FormManager extends React.Component {
 
   printFiles(files) {
     return(
-      <ul>
+      <ul key = { customFunctions.randomNumber() }>
         {files.map( (file, index) => {
           return file && file.type === 'd'
             ? this.printAllDirectory(file, index)

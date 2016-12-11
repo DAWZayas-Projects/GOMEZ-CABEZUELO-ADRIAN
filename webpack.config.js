@@ -18,7 +18,6 @@ module.exports = {
       'react-redux',
       'react-dom',
       'jquery',
-      'plot',
       'whatwg-fetch',
     ]
   },
@@ -34,7 +33,7 @@ module.exports = {
         }),
      new webpack.optimize.CommonsChunkPlugin('vendor', './vendor.bundle.js'),
      new webpack.DefinePlugin({
-        "process.env": {
+        "process.env": {  
           NODE_ENV: JSON.stringify("development")
       }}),
      new webpack.HotModuleReplacementPlugin()

@@ -18,10 +18,13 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'src/public/assets'),
     filename: '[name].js',
-    publicPath: 'http://localhost:3000/static/',
+    publicPath: 'http://localhost:3000/',
   },
   plugins: [
-
+    new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery"
+        }),
      new webpack.optimize.CommonsChunkPlugin('vendor', './vendor.bundle.js'),
      new webpack.optimize.UglifyJsPlugin({
       compress: {

@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import * as customFunctions from '../helper/functions'
 
 class FileFtp extends React.Component {
 
@@ -9,7 +10,7 @@ class FileFtp extends React.Component {
   render() {
 
     return (
-        <li className="custom-file" onClick={() => this.props.ChangeRoot(event, this.props.root)} >
+        <li className="custom-file" key = { customFunctions.randomNumber() } onClick={() => this.props.ChangeRoot(event, this.props.root)} >
           { this.props.file.name }
           <i className="fa fa-file-o fa-sm" aria-hidden="true"></i>
         </li>

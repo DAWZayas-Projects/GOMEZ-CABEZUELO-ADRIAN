@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import * as customFunctions from '../helper/functions'
 
 class DirectoryFtp extends React.Component {
 
@@ -21,7 +22,7 @@ class DirectoryFtp extends React.Component {
   render() {
 
     return (
-        <li className="custom-directory" onClick={ (event) => this.onClickDirectory(event) } >
+        <li className="custom-directory" key = { customFunctions.randomNumber() } onClick={ (event) => this.onClickDirectory(event) } >
           { this.props.dir.name } 
           <div>
             <i style={{'marginRight': '10px'}} className="fa fa-eye fa-sm" aria-hidden="true" 
