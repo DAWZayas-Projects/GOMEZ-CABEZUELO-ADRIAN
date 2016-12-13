@@ -1,8 +1,8 @@
 
-# Project with koa2, redux and react
+# Node for everyone
 
 Application for uploading files via ftp and have a record
-
+Technology:
 * Koa2
 * Redux
 * React
